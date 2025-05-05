@@ -29,14 +29,17 @@
         <p>Our Most popular recipes of the week</p>
        </div>
        <div>
-        <a href="">View All</a>
+        <a routerLink="/allrecipes">View All</a>
        </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <img src="https://cdn.dummyjson.com/recipe-images/16.webp" class="w-75" alt="">
-            <p>Japanese Ramen Soup lg</p>
-        </div>
+        @for (item of recipeArray; track $index) {
+            <div class="col-4">
+                <img src={{item.image}} class="w-75" alt="">
+                <p>{{item.name}}</p>
+            </div>
+        }
+       
        
     </div>
 </div>

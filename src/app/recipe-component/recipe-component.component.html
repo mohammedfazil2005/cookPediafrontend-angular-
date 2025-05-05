@@ -6,7 +6,7 @@
             </div>
             <div class="col-8 d-flex justify-content-between align-items-center">
                 <h1>All Recipes</h1>
-                <input class="form-control w-50" type="text" placeholder="Search your Recipe Name here!!">
+                <input [(ngModel)]="searchkey" class="form-control w-50" type="text" placeholder="Search your Recipe Name here!!">
             </div>
         </div>
     </div>
@@ -15,29 +15,17 @@
             <div class="col-4">
                 
                 <div class="mb-3 d-flex flex-column align-items-start">
-                    <p class="ms-3">All</p>
+                    <button class="ms-3 btn" (click)="getRecipes()">All</button>
                     <button class="btn" data-bs-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">
                         Cuisine Type<i class="fa-solid fa-angle-down"></i>
                     </button>
                     <div class="collapse multi-collapse" id="multiCollapseExample1">
-                        <div class="d-flex flex-wrap justify-content-start mt-3 w-75">
-                            <p class="me-3 mb-2">Japanese</p>
-                            <p class="me-3 mb-2">Greek</p>
-                            <p class="me-3 mb-2">Russian</p>
-                            <p class="me-3 mb-2">Asian</p>
-                            <p class="me-3 mb-2">Italian</p>
-                            <p class="me-3 mb-2">Pakistani</p>
-                            <p class="me-3 mb-2">Korean</p>
-                            <p class="me-3 mb-2">Mexican</p>
-                            <p class="me-3 mb-2">Brazilian</p>
-                            <p class="me-3 mb-2">Moroccan</p>
-                            <p class="me-3 mb-2">Smoothie</p>
-                            <p class="me-3 mb-2">American</p>
-                            <p class="me-3 mb-2">Indian</p>
-                            <p class="me-3 mb-2">Lebanese</p>
-                            <p class="me-3 mb-2">Mediterranean</p>
-                            <p class="me-3 mb-2">Thai</p>
-                            <p class="me-3 mb-2">Turkish</p>
+                        <div class="d-flex flex-wrap justify-content-start mt-3 w-100">
+                            @for (item of cuisineArray; track $index) { 
+                                <button (click)="filterRecipes('cuisine',item)" class="me-3 mb-2 btn">{{item}}</button>
+                            }
+                           
+                            
                         </div>
                     </div>
                 </div>
@@ -48,36 +36,29 @@
                         Meal Type <i class="fa-solid fa-angle-down"></i>
                     </a>
                     <div class="collapse multi-collapse" id="multiCollapseExample2">
-                        <div class="d-flex flex-wrap justify-content-start mt-3 w-50">
-                            <p class="me-3 mb-2">Dinner</p>
-                            <p class="me-3 mb-2">Lunch</p>
-                            <p class="me-3 mb-2">Appetizer</p>
-                            <p class="me-3 mb-2">Snacks</p>
-                            <p class="me-3 mb-2">Dessert</p>
-                            <p class="me-3 mb-2">Beverage</p>
-                            <p class="me-3 mb-2">Snack</p>
-                            <p class="me-3 mb-2">Side Dish</p>
-                            <p class="me-3 mb-2">Breakfast</p>
+                        <div class="d-flex flex-wrap justify-content-start mt-3 w-100">
+                            @for (item of MealArray; track $index) {
+                                <button class="me-3 mb-2 btn" (click)="filterRecipes('mealType',item)">{{item}}</button>
+
+                            }
+                           
+                           
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-8">
                 <div class="row">
-                    <div class="col-4">
-                        <img src="https://cdn.dummyjson.com/recipe-images/16.webp" class="w-100" alt="">
-                        <p>Japanese Ramen Soup lg</p>
-                    </div>
-                    <div class="col-4">
-                        <img src="https://cdn.dummyjson.com/recipe-images/16.webp" class="w-100" alt="">
-                        <p>Japanese Ramen Soup lg</p>
-                    </div>
-                    <div class="col-4">
-                        <img src="https://cdn.dummyjson.com/recipe-images/16.webp" class="w-100" alt="">
-                        <p>Japanese Ramen Soup lg</p>
-                    </div>
+                    @for (item of recipeArray| search:searchkey|paginate: { itemsPerPage: 9, currentPage: currentpage }; track $index) {
+                        <div class="col-4">
+                            <img src={{item.image}} class="w-100" alt="">
+                            <h4 class="fs-5">{{item.name}}</h4>
+                            <p>{{item.cuisine}}</p>
+                        </div>
+                    }
                    
                 </div>
+                <pagination-controls (pageChange)="currentpage = $event"></pagination-controls>
             </div>
         </div>
     </div>
