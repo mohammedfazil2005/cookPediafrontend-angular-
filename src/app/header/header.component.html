@@ -22,12 +22,23 @@
         </ul>
        
         <div class="dropdown">
+         
             <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              @if (isLoggedIN) {
+                <span class="me-2">Hi,{{loggedUserName}}</span>
+              }
                 <i class="fa-solid fa-user"></i>
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="/login">Login</a></li>
+              @if (isLoggedIN) {
+                <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+                <li><a class="dropdown-item" routerLink="/savedrecipes">Saved Recipes</a></li>
+                <li><button class="btn"><i class="fa-solid fa-right-from-bracket"></i>  Logout</button></li>
+              }@else {
+                <li><a class="dropdown-item" routerLink="/login">Login</a></li>
               <li><a class="dropdown-item" routerLink="/register">Register</a></li>
+              }
+              
             </ul>
           </div>
       </div>

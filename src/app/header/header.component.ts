@@ -9,4 +9,16 @@ import { RouterLink } from '@angular/router';
 })
 export class HeaderComponent {
 
+  isLoggedIN:boolean=false
+  loggedUserName:string=""
+
+  ngOnInit(){
+    if(sessionStorage.getItem('token')){
+      this.isLoggedIN=true
+      let val=JSON.parse(sessionStorage.getItem("user")||"")
+      this.loggedUserName=val.username
+
+    }
+  }
+
 }
